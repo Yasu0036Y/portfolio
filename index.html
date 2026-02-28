@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex • creative freelance</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0b0c15;
+            color: #ecedf2;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* creative blurred orbs / background animation */
+        .bg-orb {
+            position: fixed;
+            width: 60vmax;
+            height: 60vmax;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(100, 80, 255, 0.25), rgba(255, 120, 200, 0.1) 70%);
+            filter: blur(100px);
+            z-index: -2;
+            top: -20vh;
+            right: -10vw;
+            animation: floatOrb 18s infinite alternate ease-in-out;
+        }
+
+        .bg-orb-2 {
+            position: fixed;
+            width: 70vmin;
+            height: 70vmin;
+            border-radius: 50%;
+            background: radial-gradient(circle at 70% 70%, #3a2b6d, #b84c9f 80%);
+            filter: blur(120px);
+            z-index: -1;
+            bottom: 0;
+            left: 0;
+            opacity: 0.35;
+            animation: floatOrb2 20s infinite alternate;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(10%, 15%) scale(1.2); }
+        }
+        @keyframes floatOrb2 {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            100% { transform: translate(-8%, -10%) scale(1.3); opacity: 0.4; }
+        }
+
+        /* container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* header / nav */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #d9b3ff, #a3ddff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: #f0f0fc;
+            text-decoration: none;
+            transition: 0.2s;
+            font-size: 1.1rem;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #a97cf2;
+            color: #ffffff;
+        }
+
+        /* promo hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 40px;
+            padding: 60px 0 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(to right, #ffffff, #cfb3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .hero-highlight {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 6px solid #b77ef0;
+            padding: 16px 24px;
+            margin: 30px 0;
+            border-radius: 0 20px 20px 0;
+            backdrop-filter: blur(6px);
+            font-size: 1.3rem;
+            font-weight: 300;
+        }
+
+        .hero-highlight i {
+            color: #a97cf2;
+            margin-right: 12px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 35px;
+        }
+
+        .stat-item {
+            background: rgba(20, 15, 45, 0.5);
+            backdrop-filter: blur(8px);
+            padding: 10px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d2b5ff;
+        }
+
+        /* hero right : abstract shape + profile hint */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .floating-card {
+            background: rgba(35, 30, 60, 0.4);
+            backdrop-filter: blur(16px);
+            border-radius: 40px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            transform: rotate(3deg);
+            width: 100%;
+            max-width: 380px;
+            transition: 0.3s;
+            animation: floatCard 6s infinite alternate;
+        }
+
+        @keyframes floatCard {
+            0% { transform: rotate(3deg) translateY(0); }
+            100% { transform: rotate(1deg) translateY(-15px); }
+        }
+
+        .floating-card .avatar {
+            font-size: 4rem;
+            background: #2b2350;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border: 3px solid #b77ef0;
+        }
+
+        .floating-card h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .floating-card .badge {
+            background: #7d64b4;
+            padding: 8px 16px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px #7d64b466;
+        }
+
+        /* section general */
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 70px 0 40px;
+            position: relative;
+            display: inline-block;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 0;
+            width: 70%;
+            height: 5px;
+            background: linear-gradient(90deg, #a97cf2, #6fcfdf, transparent);
+            border-radius: 10px;
+        }
+
+        /* services cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .service-card {
+            background: rgba(20, 18, 35, 0.5);
+            backdrop-filter: blur(10px);
+            padding: 30px 25px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.25s;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(170, 120, 255, 0.4);
+            background: rgba(30, 25, 50, 0.7);
+        }
+
+        .service-icon {
+            font-size: 2.7rem;
+            background: linear-gradient(145deg, #ab8cff, #6fc3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .service-card p {
+            color: #b5b8d1;
+        }
+
+        /* portfolio grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .project {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.2s;
+        }
+
+        .project:hover {
+            border-color: #a97cf2;
+            box-shadow: 0 10px 30px #b77ef033;
+        }
+
+        .project-img {
+            height: 200px;
+            background: linear-gradient(135deg, #302856, #1b1a2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a28dd8;
+            font-size: 3rem;
+            position: relative;
+        }
+
+        .project-img i {
+            opacity: 0.8;
+            transition: 0.2s;
+        }
+
+        .project:hover .project-img i {
+            transform: scale(1.1);
+            color: #dbbaff;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h4 {
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .project-info p {
+            color: #b7b7d9;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #2b264a;
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-top: 12px;
+            color: #c1b0f0;
+        }
+
+        /* testimonials */
+        .testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .testimonial {
+            background: rgba(15, 12, 30, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 40px;
+            flex: 1 1 280px;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+
+        .testimonial i {
+            color: #9f83d9;
+            font-size: 2rem;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .client {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .client-avatar {
+            background: #38316b;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+        }
+
+        /* CTA / contact */
+        .cta-section {
+            background: linear-gradient(145deg, #0d0b1a, #1f1b38);
+            border-radius: 60px;
+            padding: 60px 40px;
+            margin: 80px 0;
+            text-align: center;
+            border: 1px solid #343060;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(145deg, #a97cf2, #ba8bf5);
+            color: #0d0b1a;
+            font-weight: 700;
+            padding: 18px 50px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            text-decoration: none;
+            margin: 30px 0 10px;
+            transition: 0.2s;
+            border: none;
+            box-shadow: 0 8px 30px #a97cf280;
+        }
+
+        .cta-button:hover {
+            background: #c39eff;
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px #b77ef0;
+        }
+
+        /* contact form (mini) */
+        .contact-form {
+            max-width: 600px;
+            margin: 40px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input, .contact-form textarea {
+            background: rgba(10, 8, 22, 0.7);
+            border: 1px solid #3f3670;
+            border-radius: 50px;
+            padding: 18px 25px;
+            font-size: 1.1rem;
+            color: white;
+            outline: none;
+            backdrop-filter: blur(6px);
+        }
+
+        .contact-form textarea {
+            border-radius: 30px;
+            resize: vertical;
+        }
+
+        .contact-form input:focus, .contact-form textarea:focus {
+            border-color: #c3a3ff;
+        }
+
+        .contact-form button {
+            background: white;
+            color: #0b0c15;
+            border: none;
+            font-weight: 700;
+            padding: 16px 30px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: 0.2s;
+            width: fit-content;
+            margin: 0 auto;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .contact-form button:hover {
+            background: #d3bcff;
+        }
+
+        /* footer */
+        .footer {
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .social i {
+            font-size: 1.8rem;
+            margin-left: 25px;
+            color: #b2a4d4;
+            transition: 0.2s;
+        }
+
+        .social i:hover {
+            color: white;
+            transform: translateY(-4px);
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .stats {
+                justify-content: center;
+            }
+            .hero-highlight {
+                text-align: left;
+            }
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .section-title:after {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container { padding: 0 20px; }
+            .hero-content h1 { font-size: 2.4rem; }
+            .stat-item { padding: 6px 14px; }
+        }
+
+        /* dummy link behavior */
+        .nav-links a, .cta-button, .contact-form button {
+            cursor: pointer;
+        }
+
+        /* just for demo visual, fake smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- floating background art -->
+    <div class="bg-orb"></div>
+    <div class="bg-orb-2"></div>
+
+    <div class="container">
+        <!-- navigation -->
+        <nav class="navbar">
+            <div class="logo">✨ alex.crea</div>
+            <div class="nav-links">
+                <a href="#">Work</a>
+                <a href="#">Services</a>
+                <a href="#">Story</a>
+                <a href="#">Contact</a>
+            </div>
+        </nav>
+
+        <!-- hero section - promotional headline -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1>turn ideas into<br>digital magic ✦</h1>
+                <p style="font-size: 1.4rem; opacity: 0.85;">design & development that feels like a creative partner, not just a vendor.</p>
+                <div class="hero-highlight">
+                    <i class="fas fa-bolt"></i>  your story, amplified — web, brand, interaction
+                </div>
+                <div class="stats">
+                    <div class="stat-item"><span class="stat-number">7+</span> years</div>
+                    <div class="stat-item"><span class="stat-number">120+</span> projects</div>
+                    <div class="stat-item"><span class="stat-number">100%</span> weirdly passionate</div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card">
+                    <div class="avatar"><i class="fas fa-face-smile"></i></div>
+                    <h3>Alex Chen</h3>
+                    <div class="badge"><i class="fas fa-code"></i> creative developer</div>
+                    <p style="margin-top: 25px; font-size: 1rem;"><i class="fas fa-check-circle" style="color:#a97cf2;"></i> available for freelance — let’s build something bold</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- services / what i do (promo) -->
+        <h2 class="section-title">crafted services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-globe"></i></div>
+                <h3>web dev</h3>
+                <p>react, vue, or pure interactive canvas — performant & poetic.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-pen-fancy"></i></div>
+                <h3>visual design</h3>
+                <p>from concept to polished UI, with a touch of the unexpected.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-cube"></i></div>
+                <h3>3d & motion</h3>
+                <p>webgl, subtle animations that make your brand memorable.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon"><i class="fas fa-brain"></i></div>
+                <h3>creative consulting</h3>
+                <p>stand out with digital strategy that's actually human.</p>
+            </div>
+        </div>
+
+        <!-- portfolio section: demo projects -->
+        <h2 class="section-title">recent whispers</h2>
+        <div class="portfolio-grid">
+            <div class="project">
+                <div class="project-img"><i class="fas fa-paint-brush"></i></div>
+                <div class="project-info">
+                    <h4>NOVA festival</h4>
+                    <p>immersive microsite + ticket experience</p>
+                    <span class="tag">three.js</span> <span class="tag">ui/ux</span>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-img"><i class="fas fa-mask"></i></div>
+                <div class="project-info">
+                    <h4>SOLACE beauty</h4>
+                    <p>elevated e‑commerce & identity</p>
+                    <span class="tag">shopify</span> <span class="tag">custom theme</span>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-img"><i class="fas fa-robot"></i></div>
+                <div class="project-info">
+                    <h4>AI playground</h4>
+                    <p>interactive brand campaign</p>
+                    <span class="tag">generative</span> <span class="tag">webgl</span>
+                </div>
+            </div>
+            <div class="project">
+                <div class="project-img"><i class="fas fa-leaf"></i></div>
+                <div class="project-info">
+                    <h4>FOREST portfolio</h4>
+                    <p>personal site for an artist</p>
+                    <span class="tag">gsap</span> <span class="tag">creative dev</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- client testimonials / social proof -->
+        <h2 class="section-title">kind words</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <i class="fas fa-quote-right"></i>
+                <p>Alex redesigned our entire platform — it finally feels like us. bold, fluid, human.</p>
+                <div class="client">
+                    <div class="client-avatar"><i class="fas fa-user-astronaut"></i></div>
+                    <div><strong>mira k.</strong><br>founder, lumen studio</div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <i class="fas fa-quote-right"></i>
+                <p>the most creative freelancer i've worked with. brings ideas i couldn't even imagine.</p>
+                <div class="client">
+                    <div class="client-avatar"><i class="fas fa-user-ninja"></i></div>
+                    <div><strong>jordan w.</strong><br>creative director, odd</div>
+                </div>
+            </div>
+            <div class="testimonial">
+                <i class="fas fa-quote-right"></i>
+                <p>delivered beyond the brief, and made the process fun. rare combo.</p>
+                <div class="client">
+                    <div class="client-avatar"><i class="fas fa-user-tie"></i></div>
+                    <div><strong>sam l.</strong><br>music producer</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- strong call to action & mini contact form (promotional) -->
+        <div class="cta-section">
+            <h2>ready to create something that stands out?</h2>
+            <p style="font-size: 1.3rem; max-width: 600px; margin: 0 auto;">limited slots for Q2 — let's chat about your project.</p>
+            <a href="#" class="cta-button"><i class="fas fa-sparkles"></i>  book a free call</a>
+            <div style="margin: 40px 0 20px; opacity: 0.6;">or just say hello</div>
+            <!-- mini contact form (demo) -->
+            <form class="contact-form">
+                <input type="text" placeholder="your name" required>
+                <input type="email" placeholder="email address" required>
+                <textarea rows="2" placeholder="what's your idea?"></textarea>
+                <button type="submit">send message <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+
+        <!-- footer with social -->
+        <footer class="footer">
+            <div>© 2025 alex.crea —  craft & code</div>
+            <div class="social">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-linkedin-in"></i>
+                <i class="fab fa-github"></i>
+                <i class="fab fa-x-twitter"></i>
+            </div>
+        </footer>
+    </div>
+
+    <!-- dummy smooth interaction (just for demo polish) -->
+    <script>
+        (function() {
+            // small effect: log for demo, but keep it clean
+            console.log('✨ creative freelance demo — ready to impress clients!');
+            // optional: hover sound? no. just a subtle dynamic feel
+            const cta = document.querySelector('.cta-button');
+            if(cta) {
+                cta.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert('🎯 thanks for your interest! (this is a demo — your future client can click here)');
+                });
+            }
+            // contact form demo prevent submit
+            const form = document.querySelector('.contact-form');
+            if(form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('📬 demo: message sent (not really, but looks good!)');
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
