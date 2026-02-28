@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex • creative freelance</title>
+    <title>Alex • creative 3D scroll</title>
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +22,7 @@
             color: #ecedf2;
             line-height: 1.6;
             overflow-x: hidden;
+            perspective: 1200px; /* gives 3D depth to child transforms */
         }
 
         /* creative blurred orbs / background animation */
@@ -61,14 +62,13 @@
             100% { transform: translate(-8%, -10%) scale(1.3); opacity: 0.4; }
         }
 
-        /* container */
         .container {
             max-width: 1300px;
             margin: 0 auto;
             padding: 0 30px;
         }
 
-        /* header / nav */
+        /* navbar unchanged */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -106,7 +106,7 @@
             color: #ffffff;
         }
 
-        /* promo hero */
+        /* hero unchanged (above fold, no scroll animation needed) */
         .hero {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
@@ -161,7 +161,6 @@
             color: #d2b5ff;
         }
 
-        /* hero right : abstract shape + profile hint */
         .hero-visual {
             position: relative;
             display: flex;
@@ -235,6 +234,49 @@
             border-radius: 10px;
         }
 
+        /* ---------- 3D SCROLL ANIMATIONS ---------- */
+        /* base hidden state for animated elements */
+        .pop-on-scroll {
+            opacity: 0;
+            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            will-change: transform, opacity;
+        }
+
+        /* different entrance directions (3D transforms) */
+        .from-left {
+            transform: translateX(-70px) rotateY(15deg) scale(0.95);
+        }
+        .from-right {
+            transform: translateX(70px) rotateY(-15deg) scale(0.95);
+        }
+        .from-top {
+            transform: translateY(-70px) rotateX(8deg) scale(0.95);
+        }
+        .from-bottom {
+            transform: translateY(70px) rotateX(-8deg) scale(0.95);
+        }
+        .from-inside {
+            transform: scale(0.3) rotate(10deg) translateZ(-100px);
+        }
+
+        /* visible state – reset all transforms */
+        .pop-on-scroll.in-view {
+            opacity: 1;
+            transform: translateX(0) translateY(0) rotateY(0) rotateX(0) scale(1) translateZ(0);
+        }
+
+        /* apply to cards, portfolio items, testimonials, etc */
+        .service-card, .project, .testimonial, .stat-item, .cta-section, .footer {
+            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+        }
+        /* we'll set them as pop-on-scroll via js or manual class, easier to add class in html */
+        
+        /* small tweaks */
+        .services-grid, .portfolio-grid, .testimonials {
+            perspective: 1200px;
+        }
+        /* ---------------------------------------- */
+
         /* services cards */
         .services-grid {
             display: grid;
@@ -249,14 +291,16 @@
             padding: 30px 25px;
             border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.03);
-            transition: all 0.25s;
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+            /* base hidden, will be overridden by direction classes */
+            opacity: 0; 
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02) !important; /* keep hover effect even after animation */
             border-color: rgba(170, 120, 255, 0.4);
             background: rgba(30, 25, 50, 0.7);
+            transition: transform 0.2s, border-color 0.2s, background 0.2s;
         }
 
         .service-icon {
@@ -290,7 +334,7 @@
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: 0.2s;
+            opacity: 0;
         }
 
         .project:hover {
@@ -357,6 +401,7 @@
             border-radius: 40px;
             flex: 1 1 280px;
             border: 1px solid rgba(255,255,255,0.02);
+            opacity: 0;
         }
 
         .testimonial i {
@@ -397,6 +442,7 @@
             margin: 80px 0;
             text-align: center;
             border: 1px solid #343060;
+            opacity: 0; /* hidden until scroll */
         }
 
         .cta-section h2 {
@@ -484,6 +530,7 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            opacity: 0;
         }
 
         .social i {
@@ -528,12 +575,10 @@
             .stat-item { padding: 6px 14px; }
         }
 
-        /* dummy link behavior */
         .nav-links a, .cta-button, .contact-form button {
             cursor: pointer;
         }
 
-        /* just for demo visual, fake smooth scroll */
         html {
             scroll-behavior: smooth;
         }
@@ -556,18 +601,18 @@
             </div>
         </nav>
 
-        <!-- hero section - promotional headline -->
+        <!-- hero section - no scroll animation needed (already visible) -->
         <div class="hero">
             <div class="hero-content">
-                <h1>Turn ideas into<br>digital magic ✦</h1>
+                <h1>turn ideas into<br>digital magic ✦</h1>
                 <p style="font-size: 1.4rem; opacity: 0.85;">design & development that feels like a creative partner, not just a vendor.</p>
                 <div class="hero-highlight">
                     <i class="fas fa-bolt"></i>  your story, amplified — web, brand, interaction
                 </div>
                 <div class="stats">
-                    <div class="stat-item"><span class="stat-number">Beginners</div>
-                    <div class="stat-item"><span class="stat-number">5</span>Projects</div>
-                    <div class="stat-item"><span class="stat-number">100%</span> weirdly passionate</div>
+                    <div class="stat-item pop-on-scroll from-left" style="transition-delay: 0.1s;"><span class="stat-number">7+</span> years</div>
+                    <div class="stat-item pop-on-scroll from-inside" style="transition-delay: 0.2s;"><span class="stat-number">120+</span> projects</div>
+                    <div class="stat-item pop-on-scroll from-right" style="transition-delay: 0.3s;"><span class="stat-number">100%</span> weirdly passionate</div>
                 </div>
             </div>
             <div class="hero-visual">
@@ -580,35 +625,35 @@
             </div>
         </div>
 
-        <!-- services / what i do (promo) -->
+        <!-- services / what i do (promo) with 3D scroll animations -->
         <h2 class="section-title">crafted services</h2>
         <div class="services-grid">
-            <div class="service-card">
+            <div class="service-card pop-on-scroll from-left" style="transition-delay: 0.1s;">
                 <div class="service-icon"><i class="fas fa-globe"></i></div>
                 <h3>web dev</h3>
                 <p>react, vue, or pure interactive canvas — performant & poetic.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card pop-on-scroll from-top" style="transition-delay: 0.15s;">
                 <div class="service-icon"><i class="fas fa-pen-fancy"></i></div>
                 <h3>visual design</h3>
                 <p>from concept to polished UI, with a touch of the unexpected.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card pop-on-scroll from-inside" style="transition-delay: 0.2s;">
                 <div class="service-icon"><i class="fas fa-cube"></i></div>
                 <h3>3d & motion</h3>
                 <p>webgl, subtle animations that make your brand memorable.</p>
             </div>
-            <div class="service-card">
+            <div class="service-card pop-on-scroll from-right" style="transition-delay: 0.25s;">
                 <div class="service-icon"><i class="fas fa-brain"></i></div>
                 <h3>creative consulting</h3>
                 <p>stand out with digital strategy that's actually human.</p>
             </div>
         </div>
 
-        <!-- portfolio section: demo projects -->
+        <!-- portfolio section with 3D scroll animations -->
         <h2 class="section-title">recent whispers</h2>
         <div class="portfolio-grid">
-            <div class="project">
+            <div class="project pop-on-scroll from-left" style="transition-delay: 0.1s;">
                 <div class="project-img"><i class="fas fa-paint-brush"></i></div>
                 <div class="project-info">
                     <h4>NOVA festival</h4>
@@ -616,7 +661,7 @@
                     <span class="tag">three.js</span> <span class="tag">ui/ux</span>
                 </div>
             </div>
-            <div class="project">
+            <div class="project pop-on-scroll from-top" style="transition-delay: 0.2s;">
                 <div class="project-img"><i class="fas fa-mask"></i></div>
                 <div class="project-info">
                     <h4>SOLACE beauty</h4>
@@ -624,7 +669,7 @@
                     <span class="tag">shopify</span> <span class="tag">custom theme</span>
                 </div>
             </div>
-            <div class="project">
+            <div class="project pop-on-scroll from-inside" style="transition-delay: 0.3s;">
                 <div class="project-img"><i class="fas fa-robot"></i></div>
                 <div class="project-info">
                     <h4>AI playground</h4>
@@ -632,7 +677,7 @@
                     <span class="tag">generative</span> <span class="tag">webgl</span>
                 </div>
             </div>
-            <div class="project">
+            <div class="project pop-on-scroll from-right" style="transition-delay: 0.4s;">
                 <div class="project-img"><i class="fas fa-leaf"></i></div>
                 <div class="project-info">
                     <h4>FOREST portfolio</h4>
@@ -641,9 +686,9 @@
                 </div>
             </div>
         </div>
-        
-        <!-- strong call to action & mini contact form (promotional) -->
-        <div class="cta-section">
+
+        <!-- strong call to action & mini contact form (promotional) with 3D scroll -->
+        <div class="cta-section pop-on-scroll from-inside" style="transition-delay: 0.2s;">
             <h2>ready to create something that stands out?</h2>
             <p style="font-size: 1.3rem; max-width: 600px; margin: 0 auto;">limited slots for Q2 — let's chat about your project.</p>
             <a href="#" class="cta-button"><i class="fas fa-sparkles"></i>  book a free call</a>
@@ -658,7 +703,7 @@
         </div>
 
         <!-- footer with social -->
-        <footer class="footer">
+        <footer class="footer pop-on-scroll from-bottom">
             <div>© 2025 alex.crea —  craft & code</div>
             <div class="social">
                 <i class="fab fa-instagram"></i>
@@ -669,12 +714,30 @@
         </footer>
     </div>
 
-    <!-- dummy smooth interaction (just for demo polish) -->
+    <!-- Intersection Observer for scroll-triggered 3D animations -->
     <script>
         (function() {
-            // small effect: log for demo, but keep it clean
-            console.log('✨ creative freelance demo — ready to impress clients!');
-            // optional: hover sound? no. just a subtle dynamic feel
+            // Select all elements with class 'pop-on-scroll'
+            const animatedElements = document.querySelectorAll('.pop-on-scroll');
+
+            // Create an Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        // Optional: unobserve after animation to improve performance
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,  // trigger when 15% of element is visible
+                rootMargin: '0px 0px -20px 0px' // small offset for better timing
+            });
+
+            // Observe each element
+            animatedElements.forEach(el => observer.observe(el));
+
+            // demo interaction (keep existing)
             const cta = document.querySelector('.cta-button');
             if(cta) {
                 cta.addEventListener('click', (e) => {
@@ -682,7 +745,6 @@
                     alert('🎯 thanks for your interest! (this is a demo — your future client can click here)');
                 });
             }
-            // contact form demo prevent submit
             const form = document.querySelector('.contact-form');
             if(form) {
                 form.addEventListener('submit', (e) => {
