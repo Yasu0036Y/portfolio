@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alex • creative 3D scroll</title>
+    <title>GTKY • creative 3D scroll + work links</title>
     <!-- Google Fonts & Font Awesome -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,10 +22,10 @@
             color: #ecedf2;
             line-height: 1.6;
             overflow-x: hidden;
-            perspective: 1200px; /* gives 3D depth to child transforms */
+            perspective: 1200px;
         }
 
-        /* creative blurred orbs / background animation */
+        /* creative blurred orbs background */
         .bg-orb {
             position: fixed;
             width: 60vmax;
@@ -68,13 +68,14 @@
             padding: 0 30px;
         }
 
-        /* navbar unchanged */
+        /* navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 25px 0;
             flex-wrap: wrap;
+            position: relative;
         }
 
         .logo {
@@ -90,6 +91,7 @@
             display: flex;
             gap: 40px;
             font-weight: 500;
+            align-items: center;
         }
 
         .nav-links a {
@@ -99,6 +101,7 @@
             font-size: 1.1rem;
             border-bottom: 2px solid transparent;
             padding-bottom: 4px;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
@@ -106,7 +109,85 @@
             color: #ffffff;
         }
 
-        /* hero unchanged (above fold, no scroll animation needed) */
+        /* ----- WORK DROPDOWN PANEL (permanent demo links) ----- */
+        .work-dropdown {
+            position: absolute;
+            top: 75px;
+            right: 120px;
+            background: rgba(20, 18, 35, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 25px;
+            width: 320px;
+            box-shadow: 0 25px 50px -8px rgba(0,0,0,0.8), 0 0 0 1px rgba(200, 180, 255, 0.2) inset;
+            z-index: 100;
+            display: none;
+            transition: opacity 0.2s, transform 0.2s;
+            transform-origin: top right;
+        }
+
+        .work-dropdown.show {
+            display: block;
+            animation: dropFade 0.2s ease;
+        }
+
+        @keyframes dropFade {
+            0% { opacity: 0; transform: scale(0.95) translateY(-10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .work-dropdown h3 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: white;
+            border-bottom: 2px solid #a97cf2;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .demo-link-list {
+            list-style: none;
+            margin-bottom: 5px;
+        }
+
+        .demo-link-list li {
+            margin: 12px 0;
+            border-radius: 50px;
+            transition: 0.15s;
+        }
+
+        .demo-link-list li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 50px;
+            color: #f0f0fc;
+            text-decoration: none;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            transition: 0.15s;
+        }
+
+        .demo-link-list li a i {
+            color: #a97cf2;
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+
+        .demo-link-list li a:hover {
+            background: rgba(90, 70, 150, 0.4);
+            border-color: #a97cf2;
+            transform: translateX(5px);
+            color: white;
+        }
+
+        /* hero unchanged */
         .hero {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
@@ -234,57 +315,29 @@
             border-radius: 10px;
         }
 
-        /* ---------- 3D SCROLL ANIMATIONS ---------- */
-        /* base hidden state for animated elements */
+        /* 3D scroll animations */
         .pop-on-scroll {
             opacity: 0;
             transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
             will-change: transform, opacity;
         }
-
-        /* different entrance directions (3D transforms) */
-        .from-left {
-            transform: translateX(-70px) rotateY(15deg) scale(0.95);
-        }
-        .from-right {
-            transform: translateX(70px) rotateY(-15deg) scale(0.95);
-        }
-        .from-top {
-            transform: translateY(-70px) rotateX(8deg) scale(0.95);
-        }
-        .from-bottom {
-            transform: translateY(70px) rotateX(-8deg) scale(0.95);
-        }
-        .from-inside {
-            transform: scale(0.3) rotate(10deg) translateZ(-100px);
-        }
-
-        /* visible state – reset all transforms */
+        .from-left { transform: translateX(-70px) rotateY(15deg) scale(0.95); }
+        .from-right { transform: translateX(70px) rotateY(-15deg) scale(0.95); }
+        .from-top { transform: translateY(-70px) rotateX(8deg) scale(0.95); }
+        .from-bottom { transform: translateY(70px) rotateX(-8deg) scale(0.95); }
+        .from-inside { transform: scale(0.3) rotate(10deg) translateZ(-100px); }
         .pop-on-scroll.in-view {
             opacity: 1;
             transform: translateX(0) translateY(0) rotateY(0) rotateX(0) scale(1) translateZ(0);
         }
 
-        /* apply to cards, portfolio items, testimonials, etc */
-        .service-card, .project, .testimonial, .stat-item, .cta-section, .footer {
-            transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.1);
-        }
-        /* we'll set them as pop-on-scroll via js or manual class, easier to add class in html */
-        
-        /* small tweaks */
-        .services-grid, .portfolio-grid, .testimonials {
-            perspective: 1200px;
-        }
-        /* ---------------------------------------- */
-
-        /* services cards */
+        /* services */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 30px;
             margin: 40px 0;
         }
-
         .service-card {
             background: rgba(20, 18, 35, 0.5);
             backdrop-filter: blur(10px);
@@ -292,17 +345,14 @@
             border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.03);
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-            /* base hidden, will be overridden by direction classes */
-            opacity: 0; 
+            opacity: 0;
         }
-
         .service-card:hover {
-            transform: translateY(-10px) scale(1.02) !important; /* keep hover effect even after animation */
+            transform: translateY(-10px) scale(1.02) !important;
             border-color: rgba(170, 120, 255, 0.4);
             background: rgba(30, 25, 50, 0.7);
             transition: transform 0.2s, border-color 0.2s, background 0.2s;
         }
-
         .service-icon {
             font-size: 2.7rem;
             background: linear-gradient(145deg, #ab8cff, #6fc3ff);
@@ -310,25 +360,16 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
         }
+        .service-card h3 { font-size: 1.9rem; font-weight: 600; margin-bottom: 10px; }
+        .service-card p { color: #b5b8d1; }
 
-        .service-card h3 {
-            font-size: 1.9rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .service-card p {
-            color: #b5b8d1;
-        }
-
-        /* portfolio grid */
+        /* portfolio */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
             margin-bottom: 30px;
         }
-
         .project {
             background: rgba(0, 0, 0, 0.25);
             border-radius: 24px;
@@ -336,12 +377,10 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             opacity: 0;
         }
-
         .project:hover {
             border-color: #a97cf2;
             box-shadow: 0 10px 30px #b77ef033;
         }
-
         .project-img {
             height: 200px;
             background: linear-gradient(135deg, #302856, #1b1a2e);
@@ -350,32 +389,11 @@
             justify-content: center;
             color: #a28dd8;
             font-size: 3rem;
-            position: relative;
         }
-
-        .project-img i {
-            opacity: 0.8;
-            transition: 0.2s;
-        }
-
-        .project:hover .project-img i {
-            transform: scale(1.1);
-            color: #dbbaff;
-        }
-
-        .project-info {
-            padding: 20px;
-        }
-
-        .project-info h4 {
-            font-size: 1.6rem;
-            font-weight: 600;
-        }
-
-        .project-info p {
-            color: #b7b7d9;
-        }
-
+        .project:hover .project-img i { transform: scale(1.1); color: #dbbaff; transition: 0.2s; }
+        .project-info { padding: 20px; }
+        .project-info h4 { font-size: 1.6rem; font-weight: 600; }
+        .project-info p { color: #b7b7d9; }
         .tag {
             display: inline-block;
             background: #2b264a;
@@ -386,55 +404,7 @@
             color: #c1b0f0;
         }
 
-        /* testimonials */
-        .testimonials {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin: 50px 0;
-        }
-
-        .testimonial {
-            background: rgba(15, 12, 30, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 30px;
-            border-radius: 40px;
-            flex: 1 1 280px;
-            border: 1px solid rgba(255,255,255,0.02);
-            opacity: 0;
-        }
-
-        .testimonial i {
-            color: #9f83d9;
-            font-size: 2rem;
-            opacity: 0.5;
-            margin-bottom: 10px;
-        }
-
-        .testimonial p {
-            font-style: italic;
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        .client {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .client-avatar {
-            background: #38316b;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6rem;
-        }
-
-        /* CTA / contact */
+        /* CTA section */
         .cta-section {
             background: linear-gradient(145deg, #0d0b1a, #1f1b38);
             border-radius: 60px;
@@ -442,15 +412,9 @@
             margin: 80px 0;
             text-align: center;
             border: 1px solid #343060;
-            opacity: 0; /* hidden until scroll */
+            opacity: 0;
         }
-
-        .cta-section h2 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
+        .cta-section h2 { font-size: 2.8rem; font-weight: 700; margin-bottom: 15px; }
         .cta-button {
             display: inline-block;
             background: linear-gradient(145deg, #a97cf2, #ba8bf5);
@@ -462,17 +426,9 @@
             text-decoration: none;
             margin: 30px 0 10px;
             transition: 0.2s;
-            border: none;
             box-shadow: 0 8px 30px #a97cf280;
         }
-
-        .cta-button:hover {
-            background: #c39eff;
-            transform: scale(1.02);
-            box-shadow: 0 15px 35px #b77ef0;
-        }
-
-        /* contact form (mini) */
+        .cta-button:hover { background: #c39eff; transform: scale(1.02); box-shadow: 0 15px 35px #b77ef0; }
         .contact-form {
             max-width: 600px;
             margin: 40px auto 0;
@@ -480,7 +436,6 @@
             flex-direction: column;
             gap: 20px;
         }
-
         .contact-form input, .contact-form textarea {
             background: rgba(10, 8, 22, 0.7);
             border: 1px solid #3f3670;
@@ -491,19 +446,11 @@
             outline: none;
             backdrop-filter: blur(6px);
         }
-
-        .contact-form textarea {
-            border-radius: 30px;
-            resize: vertical;
-        }
-
-        .contact-form input:focus, .contact-form textarea:focus {
-            border-color: #c3a3ff;
-        }
-
+        .contact-form textarea { border-radius: 30px; resize: vertical; }
+        .contact-form input:focus, .contact-form textarea:focus { border-color: #c3a3ff; }
         .contact-form button {
             background: white;
-            color: #0b0c15;
+            color: #0d0b1a;
             border: none;
             font-weight: 700;
             padding: 16px 30px;
@@ -516,10 +463,7 @@
             padding-left: 50px;
             padding-right: 50px;
         }
-
-        .contact-form button:hover {
-            background: #d3bcff;
-        }
+        .contact-form button:hover { background: #d3bcff; }
 
         /* footer */
         .footer {
@@ -532,76 +476,59 @@
             flex-wrap: wrap;
             opacity: 0;
         }
-
         .social i {
             font-size: 1.8rem;
             margin-left: 25px;
             color: #b2a4d4;
             transition: 0.2s;
         }
+        .social i:hover { color: white; transform: translateY(-4px); }
 
-        .social i:hover {
-            color: white;
-            transform: translateY(-4px);
-        }
-
-        /* responsive */
         @media (max-width: 900px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-            .stats {
-                justify-content: center;
-            }
-            .hero-highlight {
-                text-align: left;
-            }
-            .navbar {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .section-title:after {
-                width: 100%;
-            }
+            .hero { grid-template-columns: 1fr; text-align: center; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .stats { justify-content: center; }
+            .hero-highlight { text-align: left; }
+            .navbar { flex-direction: column; gap: 20px; }
+            .section-title:after { width: 100%; }
+            .work-dropdown { right: 20px; top: 140px; }
         }
-
         @media (max-width: 500px) {
             .container { padding: 0 20px; }
             .hero-content h1 { font-size: 2.4rem; }
             .stat-item { padding: 6px 14px; }
         }
-
-        .nav-links a, .cta-button, .contact-form button {
-            cursor: pointer;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
     </style>
 </head>
 <body>
-    <!-- floating background art -->
     <div class="bg-orb"></div>
     <div class="bg-orb-2"></div>
 
     <div class="container">
         <!-- navigation -->
         <nav class="navbar">
-            <div class="logo">✨ alex.crea</div>
+            <div class="logo">✨ GTKY</div>
             <div class="nav-links">
-                <a href="https://yaswanthportfolio-yasu0036ys-projects.vercel.app/">Work</a>
+                <!-- work link triggers dropdown -->
+                <a id="workLink">Work</a>
                 <a href="#">Services</a>
                 <a href="#">Story</a>
                 <a href="#">Contact</a>
             </div>
+            <!-- WORK DROPDOWN PANEL (permanent demo links) -->
+            <div id="workDropdown" class="work-dropdown">
+                <h3><i class="fas fa-link"></i> demo projects</h3>
+                <ul class="demo-link-list">
+                    <li><a href="https://karthikesh04.github.io/steel/" class="demo-link" data-project="E‑commerce Store"><i class="fas fa-store"></i> E-commerce</a></li>
+                    <li><a href="https://yaswanthportfolio-omega.vercel.app/" class="demo-link" data-project="Creative Agency"><i class="fas fa-paint-brush"></i>Demo Portfolio</a></li>
+                    <li><a href="#" class="demo-link" data-project="Mobile UI"><i class="fas fa-mobile-alt"></i> Mobile App UI</a></li>
+                    <li><a href="#" class="demo-link" data-project="Personal Blog"><i class="fas fa-blog"></i> Personal Blog</a></li>
+                </ul>
+                <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.6; text-align: center;">click any to preview demo</p>
+            </div>
         </nav>
 
-        <!-- hero section - no scroll animation needed (already visible) -->
+        <!-- hero section -->
         <div class="hero">
             <div class="hero-content">
                 <h1>turn ideas into<br>digital magic ✦</h1>
@@ -618,82 +545,37 @@
             <div class="hero-visual">
                 <div class="floating-card">
                     <div class="avatar"><i class="fas fa-face-smile"></i></div>
-                    <h3>Alex Chen</h3>
+                    <h3>GTKY</h3>
                     <div class="badge"><i class="fas fa-code"></i> creative developer</div>
                     <p style="margin-top: 25px; font-size: 1rem;"><i class="fas fa-check-circle" style="color:#a97cf2;"></i> available for freelance — let’s build something bold</p>
                 </div>
             </div>
         </div>
 
-        <!-- services / what i do (promo) with 3D scroll animations -->
+        <!-- services (with 3D scroll) -->
         <h2 class="section-title">crafted services</h2>
         <div class="services-grid">
-            <div class="service-card pop-on-scroll from-left" style="transition-delay: 0.1s;">
-                <div class="service-icon"><i class="fas fa-globe"></i></div>
-                <h3>web dev</h3>
-                <p>react, vue, or pure interactive canvas — performant & poetic.</p>
-            </div>
-            <div class="service-card pop-on-scroll from-top" style="transition-delay: 0.15s;">
-                <div class="service-icon"><i class="fas fa-pen-fancy"></i></div>
-                <h3>visual design</h3>
-                <p>from concept to polished UI, with a touch of the unexpected.</p>
-            </div>
-            <div class="service-card pop-on-scroll from-inside" style="transition-delay: 0.2s;">
-                <div class="service-icon"><i class="fas fa-cube"></i></div>
-                <h3>3d & motion</h3>
-                <p>webgl, subtle animations that make your brand memorable.</p>
-            </div>
-            <div class="service-card pop-on-scroll from-right" style="transition-delay: 0.25s;">
-                <div class="service-icon"><i class="fas fa-brain"></i></div>
-                <h3>creative consulting</h3>
-                <p>stand out with digital strategy that's actually human.</p>
-            </div>
+            <div class="service-card pop-on-scroll from-left" style="transition-delay: 0.1s;"><div class="service-icon"><i class="fas fa-globe"></i></div><h3>web dev</h3><p>react, vue, or pure interactive canvas — performant & poetic.</p></div>
+            <div class="service-card pop-on-scroll from-top" style="transition-delay: 0.15s;"><div class="service-icon"><i class="fas fa-pen-fancy"></i></div><h3>visual design</h3><p>from concept to polished UI, with a touch of the unexpected.</p></div>
+            <div class="service-card pop-on-scroll from-inside" style="transition-delay: 0.2s;"><div class="service-icon"><i class="fas fa-cube"></i></div><h3>3d & motion</h3><p>webgl, subtle animations that make your brand memorable.</p></div>
+            <div class="service-card pop-on-scroll from-right" style="transition-delay: 0.25s;"><div class="service-icon"><i class="fas fa-brain"></i></div><h3>creative consulting</h3><p>stand out with digital strategy that's actually human.</p></div>
         </div>
 
-        <!-- portfolio section with 3D scroll animations -->
+        <!-- portfolio (with 3D scroll) -->
         <h2 class="section-title">recent whispers</h2>
         <div class="portfolio-grid">
-            <div class="project pop-on-scroll from-left" style="transition-delay: 0.1s;">
-                <div class="project-img"><i class="fas fa-paint-brush"></i></div>
-                <div class="project-info">
-                    <h4>NOVA festival</h4>
-                    <p>immersive microsite + ticket experience</p>
-                    <span class="tag">three.js</span> <span class="tag">ui/ux</span>
-                </div>
-            </div>
-            <div class="project pop-on-scroll from-top" style="transition-delay: 0.2s;">
-                <div class="project-img"><i class="fas fa-mask"></i></div>
-                <div class="project-info">
-                    <h4>SOLACE beauty</h4>
-                    <p>elevated e‑commerce & identity</p>
-                    <span class="tag">shopify</span> <span class="tag">custom theme</span>
-                </div>
-            </div>
-            <div class="project pop-on-scroll from-inside" style="transition-delay: 0.3s;">
-                <div class="project-img"><i class="fas fa-robot"></i></div>
-                <div class="project-info">
-                    <h4>AI playground</h4>
-                    <p>interactive brand campaign</p>
-                    <span class="tag">generative</span> <span class="tag">webgl</span>
-                </div>
-            </div>
-            <div class="project pop-on-scroll from-right" style="transition-delay: 0.4s;">
-                <div class="project-img"><i class="fas fa-leaf"></i></div>
-                <div class="project-info">
-                    <h4>FOREST portfolio</h4>
-                    <p>personal site for an artist</p>
-                    <span class="tag">gsap</span> <span class="tag">creative dev</span>
-                </div>
-            </div>
+            <div class="project pop-on-scroll from-left" style="transition-delay: 0.1s;"><div class="project-img"><i class="fas fa-paint-brush"></i></div><div class="project-info"><h4>NOVA festival</h4><p>immersive microsite + ticket experience</p><span class="tag">three.js</span> <span class="tag">ui/ux</span></div></div>
+            <div class="project pop-on-scroll from-top" style="transition-delay: 0.2s;"><div class="project-img"><i class="fas fa-mask"></i></div><div class="project-info"><h4>SOLACE beauty</h4><p>elevated e‑commerce & identity</p><span class="tag">shopify</span> <span class="tag">custom theme</span></div></div>
+            <div class="project pop-on-scroll from-inside" style="transition-delay: 0.3s;"><div class="project-img"><i class="fas fa-robot"></i></div><div class="project-info"><h4>AI playground</h4><p>interactive brand campaign</p><span class="tag">generative</span> <span class="tag">webgl</span></div></div>
+            <div class="project pop-on-scroll from-right" style="transition-delay: 0.4s;"><div class="project-img"><i class="fas fa-leaf"></i></div><div class="project-info"><h4>FOREST portfolio</h4><p>personal site for an artist</p><span class="tag">gsap</span> <span class="tag">creative dev</span></div></div>
         </div>
 
-        <!-- strong call to action & mini contact form (promotional) with 3D scroll -->
+        <!-- CTA + contact (with 3D scroll) -->
         <div class="cta-section pop-on-scroll from-inside" style="transition-delay: 0.2s;">
             <h2>ready to create something that stands out?</h2>
             <p style="font-size: 1.3rem; max-width: 600px; margin: 0 auto;">limited slots for Q2 — let's chat about your project.</p>
             <a href="#" class="cta-button"><i class="fas fa-sparkles"></i>  book a free call</a>
             <div style="margin: 40px 0 20px; opacity: 0.6;">or just say hello</div>
-            <!-- mini contact form (demo) -->
             <form class="contact-form">
                 <input type="text" placeholder="your name" required>
                 <input type="email" placeholder="email address" required>
@@ -702,9 +584,9 @@
             </form>
         </div>
 
-        <!-- footer with social -->
+        <!-- footer -->
         <footer class="footer pop-on-scroll from-bottom">
-            <div>© 2025 alex.crea —  craft & code</div>
+            <div>© 2025 GTKY — craft & code</div>
             <div class="social">
                 <i class="fab fa-instagram"></i>
                 <i class="fab fa-linkedin-in"></i>
@@ -714,46 +596,67 @@
         </footer>
     </div>
 
-    <!-- Intersection Observer for scroll-triggered 3D animations -->
     <script>
         (function() {
-            // Select all elements with class 'pop-on-scroll'
+            // Intersection Observer for 3D scroll animations
             const animatedElements = document.querySelectorAll('.pop-on-scroll');
-
-            // Create an Intersection Observer
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('in-view');
-                        // Optional: unobserve after animation to improve performance
                         observer.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.15,  // trigger when 15% of element is visible
-                rootMargin: '0px 0px -20px 0px' // small offset for better timing
-            });
-
-            // Observe each element
+            }, { threshold: 0.15, rootMargin: '0px 0px -20px 0px' });
             animatedElements.forEach(el => observer.observe(el));
 
-            // demo interaction (keep existing)
+            // ----- WORK DROPDOWN TOGGLE -----
+            const workLink = document.getElementById('workLink');
+            const dropdown = document.getElementById('workDropdown');
+
+            workLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!dropdown.contains(e.target) && !workLink.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            dropdown.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+
+            // ----- DEMO LINKS (permanent referral links) -----
+            const demoLinks = document.querySelectorAll('.demo-link');
+            demoLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const project = link.getAttribute('data-project') || 'project';
+                    alert(`🔗 Demo: ${project} — (this would open the actual project link)`);
+                    // In a real site, you could do window.open(href) with real URLs
+                });
+            });
+
+            // CTA and form demo alerts
             const cta = document.querySelector('.cta-button');
             if(cta) {
                 cta.addEventListener('click', (e) => {
                     e.preventDefault();
-                    alert('🎯 thanks for your interest! (this is a demo — your future client can click here)');
+                    alert('🎯 thanks for your interest! (demo)');
                 });
             }
             const form = document.querySelector('.contact-form');
             if(form) {
                 form.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    alert('📬 demo: message sent (not really, but looks good!)');
+                    alert('📬 demo: message sent (demo)');
                 });
             }
         })();
     </script>
 </body>
-
 </html>
