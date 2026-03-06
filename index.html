@@ -515,16 +515,17 @@
                 <a href="#">Story</a>
                 <a href="#">Contact</a>
             </div>
-            <!-- WORK DROPDOWN PANEL (permanent demo links) -->
+            <!-- WORK DROPDOWN PANEL (permanent referral links) -->
             <div id="workDropdown" class="work-dropdown">
                 <h3><i class="fas fa-link"></i> demo projects</h3>
                 <ul class="demo-link-list">
-                    <li><a href="https://karthikesh04.github.io/steel/" class="demo-link" data-project="E‑commerce Store"><i class="fas fa-store"></i> E-commerce</a></li>
-                    <li><a href="https://yaswanthportfolio-omega.vercel.app/" class="demo-link" data-project="Creative Agency"><i class="fas fa-paint-brush"></i>Demo Portfolio</a></li>
-                    <li><a href="#" class="demo-link" data-project="Mobile UI"><i class="fas fa-mobile-alt"></i> Mobile App UI</a></li>
-                    <li><a href="#" class="demo-link" data-project="Personal Blog"><i class="fas fa-blog"></i> Personal Blog</a></li>
+                    <!-- REAL REFERRAL LINKS: replace with your own URLs -->
+                    <li><a href="https://karthikesh04.github.io/steel/" target="_blank" rel="noopener" class="demo-link"><i class="fas fa-store"></i> E‑commerce</a></li>
+                    <li><a href="https://yaswanthportfolio-omega.vercel.app/" target="_blank" rel="noopener" class="demo-link"><i class="fas fa-paint-brush"></i>Demo Portfolio</a></li>
+                    <li><a href="https://example.com/mobile-app" target="_blank" rel="noopener" class="demo-link"><i class="fas fa-mobile-alt"></i> Mobile App UI</a></li>
+                    <li><a href="https://example.com/blog" target="_blank" rel="noopener" class="demo-link"><i class="fas fa-blog"></i> Personal Blog</a></li>
                 </ul>
-                <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.6; text-align: center;">click any to preview demo</p>
+                <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.6; text-align: center;">click to open demo (new tab)</p>
             </div>
         </nav>
 
@@ -630,20 +631,10 @@
                 e.stopPropagation();
             });
 
-            // ----- DEMO LINKS (permanent referral links) -----
-            const demoLinks = document.querySelectorAll('.demo-link');
-            demoLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        // Optional: track the click, then let the browser navigate
-        console.log('Navigating to:', link.href);
-        // Do NOT call e.preventDefault()
-    });
-});
-                    // In a real site, you could do window.open(href) with real URLs
-                });
-            });
+            // ----- NO BLOCKING CODE FOR DEMO LINKS - they will navigate naturally -----
+            // The demo links now have real hrefs and target="_blank", so they work as normal.
 
-            // CTA and form demo alerts
+            // CTA and form demo alerts (keep these for demonstration)
             const cta = document.querySelector('.cta-button');
             if(cta) {
                 cta.addEventListener('click', (e) => {
