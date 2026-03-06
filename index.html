@@ -633,10 +633,12 @@
             // ----- DEMO LINKS (permanent referral links) -----
             const demoLinks = document.querySelectorAll('.demo-link');
             demoLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const project = link.getAttribute('data-project') || 'project';
-                    alert(`🔗 Demo: ${project} — (this would open the actual project link)`);
+    link.addEventListener('click', (e) => {
+        // Optional: track the click, then let the browser navigate
+        console.log('Navigating to:', link.href);
+        // Do NOT call e.preventDefault()
+    });
+});
                     // In a real site, you could do window.open(href) with real URLs
                 });
             });
